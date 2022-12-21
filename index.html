@@ -9,48 +9,42 @@
 </head>
 
 <body class="main-layout">
-    <header>
-        <h1>TravelTip Starter</h1>
-        <section class="location-finder">
-            <form>
-                <input onsubmit="onEnterLocation(this.value)" type="text">
-                <button>Go</button>
-            </form>
-
-        </section>
-        <div class="my-location"><button class="my-location-btn" onclick="onGetUserPos()">My Location</button></div>
-    </header>
-
     <main class="main-content">
+        <header>
+            <h1>TravelTip</h1>
+            <section class="location-finder">
+                <form>
+                    <input onsubmit="onEnterLocation(this.value)" type="text" placeholder="Enter Location">
+                    <button>Go</button>
+                </form>
+
+            </section>
+            <div class="my-location"><button class="my-location-btn" onclick="onGetUserPos()">My Location</button></div>
+        </header>
+
         <div class="copy-location">
-            <p>Location: <span></span></p>
+            <p>My Location: <span></span></p>
+            <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+
             <button onclick="onCopyLocation()">Copy Location</button>
         </div>
 
-        <section class="loction-info">
-            <div class="weather-container">
+        <section class="map-info-container">
+            <div class="location-info">
 
+                <div class="weather-container">
+
+                </div>
+                <div class="locations-container">
+                    <p>Locations:</p>
+                    <ul>
+
+                    </ul>
+
+                </div>
             </div>
-            <div class="locations-container">
-                <ul>
-
-                </ul>
-
-            </div>
-            <div class="map-container" id="map" style="width: 100%; height: 400px;"></div>
+            <div class="map-container" id="map" style="width: 100%; height: 460px;"></div>
         </section>
-
-
-        <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-       
-        <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-
-       
-       
-
-        <p>You are at: <span class="user-pos"></span></p>
-
-
 
         <!-- <pre class="locs">
         
