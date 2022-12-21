@@ -12,8 +12,8 @@
     <header>
         <h1>TravelTip Starter</h1>
         <section class="location-finder">
-            <form>
-                <input onsubmit="onEnterLocation(this.value)" type="text">
+            <form onsubmit="onSubmitText(event)">
+                <input class="location-input" type="text">
                 <button>Go</button>
             </form>
 
@@ -37,16 +37,16 @@
                 </ul>
 
             </div>
-            <div class="map-container" id="map" style="width: 100%; height: 400px;"></div>
+            <div class="map-container" id="map" style="width: 100%; height: 400px;" onclick="onMarkerPlacement()"></div>
         </section>
 
 
         <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-       
+
         <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
 
-       
-       
+
+
 
         <p>You are at: <span class="user-pos"></span></p>
 

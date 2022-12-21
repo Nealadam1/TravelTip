@@ -1,7 +1,9 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getLocationByStr,
+    placeMarker
 }
 
 import { placeService } from './place.service.js'
@@ -9,6 +11,7 @@ import { locService } from './loc.service.js'
 
 // Var that is used throughout this Module (not global)
 var gMap
+const GEO_API_KEY = 'AIzaSyAevI53v770_CGbP6sLCj0HMLGMQmiDj7E'
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')
@@ -20,18 +23,23 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
-            gMap.addListener('click', mapMouseEvent => {
-                let latMark = mapMouseEvent.latLng.lat()
-                let lngMark = mapMouseEvent.latLng.lng()
-                let markLoc = { lat: latMark, lng: lngMark }
-
-                addMarker(markLoc)
-                // locService.addLocs(markLoc)
-                locService.reverseGeoLocation(markLoc)
-                placeService.addPlace()
-            })
+            placeMarker()
             console.log('Map!', gMap)
         })
+}
+
+function placeMarker() {
+    gMap.addListener('click', mapMouseEvent => {
+        let latMark = mapMouseEvent.latLng.lat()
+        let lngMark = mapMouseEvent.latLng.lng()
+        let markLoc = { lat: latMark, lng: lngMark }
+
+        addMarker(markLoc)
+        // locService.addLocs(markLoc)
+        locService.reverseGeoLocation(markLoc)
+        placeService.addPlace()
+    })
+    return true
 }
 
 function addMarker(loc) {
@@ -63,3 +71,12 @@ function _connectGoogleApi() {
     })
 }
 
+function getLocationByStr(searchStr) {
+    const getSearchCoords = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchStr}&key=${GEO_API_KEY}`
+
+    return fetch(getSearchCoords).then(res => res.json())
+        .then(res => res.results).then(country => {
+            addMarker(country[0].geometry.location)
+            placeService.addPlace(country[0].geometry.location)
+        })
+}

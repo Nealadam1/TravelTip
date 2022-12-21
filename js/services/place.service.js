@@ -10,8 +10,6 @@ export const placeService = {
     save,
     getEmptyPlace,
     addPlace
-
-
 }
 
 const PLACES_KEY = 'placesDB'

@@ -5,11 +5,12 @@ import { placeService } from './services/place.service.js'
 
 window.onload = onInit
 window.onAddMarker = onAddMarker
-// window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onDeleteMarker = onDeleteMarker
 window.onPanToMarker = onPanToMarker
+window.onSubmitText = onSubmitText
+window.onMarkerPlacement = onMarkerPlacement
 
 function onInit() {
     mapService.initMap()
@@ -38,11 +39,6 @@ function onAddMarker() {
 }
 
 function onGetLocs() {
-    // locService.getLocs()
-    //     .then(locs => {
-    //         console.log('Locations:', locs)
-    //         document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-    //     })
     renderOnLoadMarkers()
 }
 
@@ -50,8 +46,16 @@ function onGetUserPos() {
     getPosition()
         .then(pos => {
             console.log('User position is:', pos.coords)
+            mapService.panTo(pos.coords.latitude, pos.coords.longitude)
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+
+            const params = new URLSearchParams();
+            params.set('lat', pos.coords.latitude);
+            params.set('long', pos.coords.longitude);
+            const url = `${window.location.href}?${params}`;
+            history.replaceState({}, '', url);
+            console.log(url);
         })
         .catch(err => {
             console.log('err!!!', err)
@@ -67,7 +71,10 @@ function onPanToMarker(id) {
     let selectedMarker = placeService.get(id)
     selectedMarker.then(marker => mapService.panTo(marker.latLng))
     renderOnLoadMarkers()
-    // mapService.panTo()
+}
+
+function onMarkerPlacement() {
+    if (mapService.placeMarker()) renderOnLoadMarkers()
 }
 
 function renderOnLoadMarkers() {
@@ -84,7 +91,6 @@ function renderOnLoadMarkers() {
                     <button onclick="onDeleteMarker('${place.id}')">Delete</button>
                     `)
             )
-            // console.log(strHTMLs)
             document.querySelector('.locations-container ul').innerHTML = strHTMLs.join('')
         })
 
@@ -93,16 +99,20 @@ function renderOnLoadMarkers() {
 function onDeleteMarker(id) {
     placeService.remove(id)
     onInit()
-
-
-    // .then(places => {
-    //     console.log(places[places.length - 1].id);
-    //     placeService.remove(places[places.length - 1].id)
-    // })
 }
 
 function renderMarkers() {
     placeService.query()
         .then(markers => markers.forEach(marker => mapService.addMarker(marker.latLng)))
     renderOnLoadMarkers()
+}
+
+function onSubmitText(ev) {
+    ev.preventDefault()
+
+    let searchStr = document.querySelector('.location-input').value
+    mapService.getLocationByStr(searchStr)
+    let elMarkerLocation = document.querySelector('.locations-container ul').innerHTML
+    renderOnLoadMarkers()
+    console.log(elMarkerLocation);
 }
