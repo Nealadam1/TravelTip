@@ -1,3 +1,4 @@
+import { storageService } from './services/async-storage.service.js'
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 import { placeService } from './services/place.service.js'
@@ -14,6 +15,10 @@ function onInit() {
             console.log('Map is ready')
         })
         .catch(() => console.log('Error: cannot init map'))
+        setTimeout(() => {
+            renderPlaces()
+        }, 3000);
+    
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -58,3 +63,7 @@ function onPanToMarker() {
 
 }
 
+function renderPlaces() {
+    const places = placeService.query()
+        .then(places=>places.map(place => <))
+}
