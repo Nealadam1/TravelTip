@@ -18,6 +18,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
+
+            gMap.addListener('click', mapMouseEvent => {
+                let latMark = mapMouseEvent.latLng.lat()
+                let lngMark = mapMouseEvent.latLng.lng()
+                let markLoc = { lat: latMark, lng: lngMark }
+
+                addMarker(markLoc)
+            })
             console.log('Map!', gMap)
         })
 }
@@ -40,6 +48,7 @@ function panTo(lat, lng) {
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
     const API_KEY = 'AIzaSyBJt0y52EfTaGx2Km5u6-0eSxrn9OfnbPI' //DONE: Enter your API Key
+    const GEO_API_KEY = 'AIzaSyAevI53v770_CGbP6sLCj0HMLGMQmiDj7E'
     var elGoogleApi = document.createElement('script')
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
     elGoogleApi.async = true
