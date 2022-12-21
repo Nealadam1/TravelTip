@@ -1,8 +1,11 @@
 export const locService = {
     getLocs,
-    addLocs
+    addLocs,
+    reverseGeoLocation
+
 }
 
+const GEO_API_KEY = 'AIzaSyAevI53v770_CGbP6sLCj0HMLGMQmiDj7E'
 
 const locs = [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
@@ -17,10 +20,41 @@ function getLocs() {
     })
 }
 
-function addLocs({ lat, lng }) {
+function addLocs(name, lat, lng) {
     // console.log(lat, lng)
-    let newLoc = { name: 'newMark', lat, lng }
+    let newLoc = { name: name, lat, lng }
     locs.push(newLoc)
-    console.log(locs)
+    // console.log(locs)
 }
 
+function reverseGeoLocation({ lat, lng }) {
+    // console.log(lat, lng);
+    const GEO_API_KEY = 'AIzaSyAevI53v770_CGbP6sLCj0HMLGMQmiDj7E'
+    let geoLocation = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GEO_API_KEY}`
+    // console.log(geoLocation);
+    return fetch(geoLocation).then(res => res.json())
+        .then(res => {
+            let address = res.results[0].formatted_address
+            address = address.split('+')
+
+            if (address.length > 1) {
+                address = address[1]
+                address = address.slice(3, address.length)
+                // console.log(address);
+                addLocs(address, lat, lng)
+                console.log(locs)
+                return address
+            } else {
+                console.log(address);
+                addLocs(address.join(' '), lat, lng)
+                console.log(locs)
+                return address.join(' ')
+            }
+
+        })
+
+}
+
+function getLocationByStr() {
+
+}

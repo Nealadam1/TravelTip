@@ -8,6 +8,8 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onDeleteMarker = onDeleteMarker
+window.onPanToMarker = onPanToMarker
 
 function onInit() {
     mapService.initMap()
@@ -65,5 +67,8 @@ function onPanToMarker() {
 
 function renderPlaces() {
     const places = placeService.query()
-        .then(places=>places.map(place => <))
+        .then(places=>places.map(place => console.log(places)))
+}
+function onDeleteMarker() {
+
 }
