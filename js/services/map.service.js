@@ -4,7 +4,7 @@ export const mapService = {
     panTo
 }
 
-import { placeService } from './place.service'
+import { placeService } from './place.service.js'
 
 
 // Var that is used throughout this Module (not global)
