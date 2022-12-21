@@ -8,7 +8,8 @@
 </head>
 
 <body>
-    <h1>TravelTip Starter</h1>
+    <header><h1>TravelTip Starter</h1></header>
+    
     <div id="map" style="width: 100%; height: 400px;"></div>
     <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
     <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
@@ -18,15 +19,19 @@
     <button onclick="onDeleteMarker()" class="btn-dlt-mark">Delete Marker</button>
 
     <p>You are at: <span class="user-pos"></span></p>
-    <div class="locations-container">
-        <ul>
-            <li>
 
-            </li>
-        </ul>
 
-    </div>
+    <section class="loction-info">
+        <div class="weather-container">
 
+        </div>
+        <div class="locations-container">
+            <ul>
+
+            </ul>
+
+        </div>
+    </section>
     <!-- <pre class="locs">
         
     </pre> -->
