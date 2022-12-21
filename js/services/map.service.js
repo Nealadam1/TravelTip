@@ -4,6 +4,8 @@ export const mapService = {
     panTo
 }
 
+import { placeService } from './place.service'
+
 
 // Var that is used throughout this Module (not global)
 var gMap
