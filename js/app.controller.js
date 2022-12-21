@@ -68,13 +68,22 @@ function onPanToLastMarker() {
 
 function renderOnLoadMarkers() {
     const places = placeService.query()
-        .then(places =>
-            places.map(place => {
-                // console.log(place)
-                const strHTMLs = `<li>Name: ${place.name} Location:${place.latLng.lat},${place.latLng.lng} Created at: ${place.createdAt}, Updated at: ${place.updatedAt}`
-                // console.log(strHTMLs)
-            }
-            ))
+        .then(places => {
+            const strHTMLs = []
+            places.map(place =>
+                strHTMLs.push(
+                    `<li>Name: ${place.name} 
+                    Location:${place.latLng.lat},${place.latLng.lng},
+                    Created at: ${place.createdAt}, 
+                    Updated at: ${place.updatedAt}
+                    <button onclick="onPanToMarker(${place.id})">Go</button>
+                    <button onclick="onDeleteMarker(${place.id})">Delete</button>
+                    `)
+            )
+            console.log(strHTMLs)
+            document.querySelector('.locations-container ul').innerHTML = strHTMLs.join('')
+        })
+
 }
 
 function onDeleteMarker(id) {
