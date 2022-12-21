@@ -45,11 +45,7 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords)
             mapService.panTo(pos.coords.latitude, pos.coords.longitude)
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
-
             const params = new URLSearchParams();
             params.set('lat', pos.coords.latitude);
             params.set('long', pos.coords.longitude);
