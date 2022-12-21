@@ -9,13 +9,13 @@ export const placeService = {
     remove,
     save,
     getEmptyPlace,
+    addPlace
 
 
 }
 
 const PLACES_KEY = 'placesDB'
 _createPlaces()
-
 
 function query() {
     return storageService.query(PLACES_KEY)
@@ -30,11 +30,13 @@ function remove(placeId) {
 }
 
 function save(place) {
-    if (place.id) {
-        return storageService.put(PLACES_KEY, place)
-    } else {
-        return storageService.post(PLACES_KEY, place)
-    }
+    return storageService.post(PLACES_KEY, place)
+}
+
+function addPlace() {
+    let currPlace = _createPlace()
+    console.log(currPlace);
+    save(currPlace)
 }
 
 function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
@@ -53,6 +55,8 @@ function _createPlace() {
 
     place.createdAt = Date.now()
     place.updatedAt = Date.now() // ??
+    // console.log(place);
+    return place
 
 
 }
@@ -62,15 +66,13 @@ function _createPlaces() {
         if (!places || !places.length) {
             _createDemoPlace()
         }
-    }
-    )
+    })
 
 
 }
 
 function _createDemoPlace() {
-    const place = [{ id: 1, name: 'test', latlng: { lat: 32, lng: 32 }, createdAt: 202020, updatedAt: 202021 }]
+    const place = { id: 1, name: 'test', latlng: { lat: 32, lng: 32 }, createdAt: 202020, updatedAt: 202021 }
     storageService.post(PLACES_KEY, place)
 }
-
 

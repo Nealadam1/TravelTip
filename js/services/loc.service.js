@@ -45,7 +45,7 @@ function reverseGeoLocation({ lat, lng }) {
                 console.log(locs)
                 return address
             } else {
-                console.log(address);
+                // console.log(address);
                 addLocs(address.join(' '), lat, lng)
                 console.log(locs)
                 return address.join(' ')

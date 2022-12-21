@@ -17,10 +17,10 @@ function onInit() {
             console.log('Map is ready')
         })
         .catch(() => console.log('Error: cannot init map'))
-        setTimeout(() => {
-            renderPlaces()
-        }, 3000);
-    
+    setTimeout(() => {
+        renderPlaces()
+    }, 3000);
+
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -67,8 +67,16 @@ function onPanToMarker() {
 
 function renderPlaces() {
     const places = placeService.query()
-        .then(places=>places.map(place => console.log(places)))
+        .then(places => places.map(place => console.log(places)))
+    placeService.addPlace()
 }
-function onDeleteMarker() {
 
+function renderMarkers() {
+    const places = placeService.query()
+
+}
+
+function onDeleteMarker() {
+    const places = placeService.query()
+        .then(places => console.log(places))
 }
