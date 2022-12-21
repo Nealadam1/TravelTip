@@ -60,7 +60,8 @@ function _createPlace() {
 function _createPlaces() {
     let places = storageService.query(PLACES_KEY).then(places => {
         if (!places || !places.length) {
-            _createDemoPlace()
+            _createDemoPlace('test')
+            
         }
     }
     )
@@ -68,8 +69,9 @@ function _createPlaces() {
 
 }
 
-function _createDemoPlace() {
-    const place = [{ id: 1, name: 'test', latlng: { lat: 32, lng: 32 }, createdAt: 202020, updatedAt: 202021 }]
+function _createDemoPlace(name) {
+    const place =
+        { id: 1, name: `${name}`, latLng: { lat: 32, lng: 32 }, createdAt: 202020, updatedAt: 202021 }
     storageService.post(PLACES_KEY, place)
 }
 
