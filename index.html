@@ -5,37 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelTip</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body>
-    <header><h1>TravelTip Starter</h1></header>
-    
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
-    <button onclick="onPanToMarker()" class="btn-move-to-mark">Pan Map to Marker</button>
-    <button onclick="onDeleteMarker()" class="btn-dlt-mark">Delete Marker</button>
+<body class="main-layout">
+    <header>
+        <h1>TravelTip Starter</h1>
+        <section class="location-finder">
+            <form>
+                <input onsubmit="onEnterLocation(this.value)" type="text">
+                <button>Go</button>
+            </form>
 
-    <p>You are at: <span class="user-pos"></span></p>
+        </section>
+        <div class="my-location"><button class="my-location-btn" onclick="onGetUserPos()">My Location</button></div>
+    </header>
 
-
-    <section class="loction-info">
-        <div class="weather-container">
-
+    <main class="main-content">
+        <div class="copy-location">
+            <p>Location: <span></span></p>
+            <button onclick="onCopyLocation()">Copy Location</button>
         </div>
-        <div class="locations-container">
-            <ul>
 
-            </ul>
+        <section class="loction-info">
+            <div class="weather-container">
 
-        </div>
-    </section>
-    <!-- <pre class="locs">
+            </div>
+            <div class="locations-container">
+                <ul>
+
+                </ul>
+
+            </div>
+            <div class="map-container" id="map" style="width: 100%; height: 400px;"></div>
+        </section>
+
+
+        <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
+        <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
+        <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+        <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+        <button onclick="onPanToMarker()" class="btn-move-to-mark">Pan Map to Marker</button>
+        <button onclick="onDeleteMarker()" class="btn-dlt-mark">Delete Marker</button>
+
+        <p>You are at: <span class="user-pos"></span></p>
+
+
+
+        <!-- <pre class="locs">
         
     </pre> -->
-    </p>
+        </p>
+    </main>
 
 
     <script type="module" src="js/app.controller.js"></script>

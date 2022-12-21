@@ -1,0 +1,39 @@
+*>{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: lightcoral;
+    font-size: 1.2rem;
+}
+
+button{}
+
+.main-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+header{
+    display: flex;
+    width: max-content;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+    margin: 20px 30px;
+    flex-grow: 1;
+    gap: 30px;
+    
+
+}
+
+
+.my-location-btn{
+    display: inline;
+}
+
+.copy-location{
+    align-self: flex-start;
+}
