@@ -34,9 +34,9 @@ function save(place) {
 }
 
 function addPlace() {
-    let currPlace = _createPlace()
+    let currPlace = _createPlace().then(placeMark => save(placeMark))
     console.log(currPlace);
-    save(currPlace)
+
 }
 
 function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
@@ -45,24 +45,20 @@ function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
 
 _createPlace()
 function _createPlace() {
-    const place = {}
-    place.id = utilService.makeId()
-    place.name = locService.getLocs().then(locs => {
-        const locname = locs[locs.length - 1].name
-        console.log(locname)
-        return locname
+    const getData = locService.getLocs().then(locs => {
+        let lastMarker = locs[locs.length - 1]
+
+        const place = getEmptyPlace()
+        place.id = utilService.makeId()
+        place.name = lastMarker.name
+        place.latLng = { lat: lastMarker.lat, lng: lastMarker.lng }
+        place.createdAt = Date.now()
+        place.updatedAt = Date.now() // ??
+        return place
+
     })
-    place.latLng = locService.getLocs().then(locs => {
-        const { lat, lng } = locs[locs.length - 1]
-        return { lat, lng }
-    })
 
-    place.createdAt = Date.now()
-    place.updatedAt = Date.now() // ??
-    // console.log(place);
-    return place
-
-
+    return getData
 }
 
 function _createPlaces() {

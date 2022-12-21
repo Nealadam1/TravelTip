@@ -16,13 +16,13 @@ function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs)
-        }, 2000)
+        }, 1000)
     })
 }
 
 function addLocs(name, lat, lng) {
     // console.log(lat, lng)
-    let newLoc = { name: name, lat, lng }
+    let newLoc = { name, lat, lng }
     locs.push(newLoc)
     // console.log(locs)
 }

@@ -78,5 +78,5 @@ function renderPlaces() {
 
 function onDeleteMarker() {
     const places = placeService.query()
-        .then(places => console.log(places))
+        .then(places => places)
 }
