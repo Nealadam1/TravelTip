@@ -9,7 +9,7 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onDeleteMarker = onDeleteMarker
-window.onPanToMarker = onPanToMarker
+window.onPanToLastMarker = onPanToLastMarker
 
 function onInit() {
     mapService.initMap()
@@ -18,8 +18,9 @@ function onInit() {
         })
         .catch(() => console.log('Error: cannot init map'))
     setTimeout(() => {
-        renderPlaces()
+        renderOnLoadMarkers()
     }, 3000);
+    renderMarkers()
 
 }
 
@@ -61,22 +62,33 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
 
-function onPanToMarker() {
-
+function onPanToLastMarker() {
+    const places = placeService.query()
 }
 
-function renderPlaces() {
+function renderOnLoadMarkers() {
     const places = placeService.query()
         .then(places =>
             places.map(place => {
-                console.log(place)
+                // console.log(place)
                 const strHTMLs = `<li>Name: ${place.name} Location:${place.latLng.lat},${place.latLng.lng} Created at: ${place.createdAt}, Updated at: ${place.updatedAt}`
-                console.log(strHTMLs)
+                // console.log(strHTMLs)
             }
             ))
 }
 
-function onDeleteMarker() {
+function onDeleteMarker(id) {
     const places = placeService.query()
-        .then(places => places)
+    placeService.remove(id)
+    mapService.initMap()
+    // .then(places => {
+    //     console.log(places[places.length - 1].id);
+    //     placeService.remove(places[places.length - 1].id)
+    //     renderMarkers()
+    // })
+}
+
+function renderMarkers() {
+    placeService.query()
+        .then(markers => markers.forEach(marker => mapService.addMarker(marker.latLng)))
 }

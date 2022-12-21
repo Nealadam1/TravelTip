@@ -36,7 +36,6 @@ function save(place) {
 function addPlace() {
     let currPlace = _createPlace().then(placeMark => save(placeMark))
     console.log(currPlace);
-
 }
 
 function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
