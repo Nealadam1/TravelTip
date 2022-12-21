@@ -45,9 +45,13 @@ function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
 
 _createPlace()
 function _createPlace() {
-    const place = getEmptyPlace()
+    const place = {}
     place.id = utilService.makeId()
-    place.name = locService.getLocs().then(locs => locs[locs.length - 1].name)
+    place.name = locService.getLocs().then(locs => {
+        const locname = locs[locs.length - 1].name
+        console.log(locname)
+        return locname
+    })
     place.latLng = locService.getLocs().then(locs => {
         const { lat, lng } = locs[locs.length - 1]
         return { lat, lng }
