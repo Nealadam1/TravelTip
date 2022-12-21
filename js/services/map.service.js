@@ -29,7 +29,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 // locService.addLocs(markLoc)
                 locService.reverseGeoLocation(markLoc)
                 placeService.addPlace()
-
             })
             console.log('Map!', gMap)
         })
