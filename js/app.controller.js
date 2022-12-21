@@ -5,7 +5,7 @@ import { placeService } from './services/place.service.js'
 
 window.onload = onInit
 window.onAddMarker = onAddMarker
-window.onPanTo = onPanTo
+// window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onDeleteMarker = onDeleteMarker
@@ -15,11 +15,12 @@ function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
+            setTimeout(() => {
+                renderOnLoadMarkers()
+                renderMarkers()
+            }, 200);
         })
         .catch(() => console.log('Error: cannot init map'))
-    setTimeout(() => {
-        renderPlaces()
-    }, 3000);
 
 }
 
@@ -37,11 +38,12 @@ function onAddMarker() {
 }
 
 function onGetLocs() {
-    locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-        })
+    // locService.getLocs()
+    //     .then(locs => {
+    //         console.log('Locations:', locs)
+    //         document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+    //     })
+    renderOnLoadMarkers()
 }
 
 function onGetUserPos() {
@@ -61,12 +63,15 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
 
-function onPanToMarker() {
-
+function onPanToMarker(id) {
+    let selectedMarker = placeService.get(id)
+    selectedMarker.then(marker => mapService.panTo(marker.latLng))
+    renderOnLoadMarkers()
+    // mapService.panTo()
 }
 
-function renderPlaces() {
-    const places = placeService.query()
+function renderOnLoadMarkers() {
+    placeService.query()
         .then(places => {
             const strHTMLs = []
             places.map(place =>
@@ -75,17 +80,29 @@ function renderPlaces() {
                     Location:${place.latLng.lat},${place.latLng.lng},
                     Created at: ${place.createdAt}, 
                     Updated at: ${place.updatedAt}
-                    <button onclick="onPanToMarker(${place.id})">Go</button>
-                    <button onclick="onDeleteMarker(${place.id})">Delete</button>
+                    <button onclick="onPanToMarker('${place.id}')">Go</button>
+                    <button onclick="onDeleteMarker('${place.id}')">Delete</button>
                     `)
             )
-            console.log(strHTMLs)
-            document.querySelector('.locations-container ul').innerHTML=strHTMLs.join('')
+            // console.log(strHTMLs)
+            document.querySelector('.locations-container ul').innerHTML = strHTMLs.join('')
         })
-     
+
 }
 
-function onDeleteMarker() {
-    const places = placeService.query()
-        .then(places => places)
+function onDeleteMarker(id) {
+    placeService.remove(id)
+    onInit()
+
+
+    // .then(places => {
+    //     console.log(places[places.length - 1].id);
+    //     placeService.remove(places[places.length - 1].id)
+    // })
+}
+
+function renderMarkers() {
+    placeService.query()
+        .then(markers => markers.forEach(marker => mapService.addMarker(marker.latLng)))
+    renderOnLoadMarkers()
 }
