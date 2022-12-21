@@ -70,7 +70,7 @@ function renderPlaces() {
         .then(places =>
             // console.log(places);
             places.map(place => {
-                console.log(place)
+                // console.log(place)
                 // const strHTMLs=`<li>Name: ${place.name} Location:${place.latLng.lat},${place.latLng.lng} Created at: ${place.createdAt}, Updated at: ${place.updateAt}`
                 // console.log(strHTMLs)
             }
@@ -79,5 +79,5 @@ function renderPlaces() {
 
 function onDeleteMarker() {
     const places = placeService.query()
-        .then(places => console.log(places))
+        .then(places => places)
 }
