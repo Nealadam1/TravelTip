@@ -16,7 +16,7 @@ function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs)
-        }, 1000)
+        }, 200)
     })
 }
 
@@ -40,14 +40,20 @@ function reverseGeoLocation({ lat, lng }) {
             if (address.length > 1) {
                 address = address[1]
                 address = address.slice(3, address.length)
-                // console.log(address);
                 addLocs(address, lat, lng)
-                console.log(locs)
+                // console.log(locs)
+                if (!address) {
+                    console.log(address);
+                    return 'unknown'
+                }
                 return address
             } else {
-                // console.log(address);
                 addLocs(address.join(' '), lat, lng)
-                console.log(locs)
+                // console.log(locs)
+                if (!address) {
+                    console.log(address);
+                    return 'unknown'
+                }
                 return address.join(' ')
             }
 
