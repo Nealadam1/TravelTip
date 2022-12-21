@@ -4,11 +4,12 @@ export const mapService = {
     panTo
 }
 
-import { placeService } from './place.service'
-
+// import { placeService } from './place.service.js'
+import { locService } from './loc.service.js'
 
 // Var that is used throughout this Module (not global)
 var gMap
+let gMarkCoords
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')
@@ -25,8 +26,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 let latMark = mapMouseEvent.latLng.lat()
                 let lngMark = mapMouseEvent.latLng.lng()
                 let markLoc = { lat: latMark, lng: lngMark }
-
+                gMarkCoords = markLoc
                 addMarker(markLoc)
+                locService.addLocs(markLoc)
             })
             console.log('Map!', gMap)
         })
@@ -46,6 +48,11 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 }
 
+function reverseGeoLocation() {
+    let { lat, lng } = gMarkerLoc
+    const GEO_API_KEY = 'AIzaSyAevI53v770_CGbP6sLCj0HMLGMQmiDj7E'
+    const geoLocation = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GEO_API_KEY}`
+}
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
