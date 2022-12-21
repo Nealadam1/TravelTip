@@ -28,8 +28,6 @@ function getEmptyPlace(name = '', lat = 32, latLng = { lat: 32, lng: 32 }) {
     return { id: '', name, latLng }
 }
 
-
-
 function remove() {
 
 }

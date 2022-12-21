@@ -7,6 +7,8 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onDeleteMarker = onDeleteMarker
+window.onPanToMarker = onPanToMarker
 
 function onInit() {
     mapService.initMap()
@@ -58,3 +60,6 @@ function onPanToMarker() {
 
 }
 
+function onDeleteMarker() {
+
+}
